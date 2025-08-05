@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>元河桥 · SENTER</title>
+  <meta name="description" content="元河桥 · SENTER — 连接人类与未来的桥梁，共生、共享、进化的思想与实践平台。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- 你可以替换为本地字体或调整 -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Source+Han+Sans+CN:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#0f1e3f;
+      --blue:#1f6fbf;
+      --yellow:#ffd54f;
+      --white:#f5f5f5;
+      --radius:12px;
+      --max-width:1024px;
+      font-family: "Source Han Sans CN", "Noto Sans SC", "Montserrat", system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body {
+      background: var(--bg);
+      color: var(--white);
+      line-height:1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    a {color: inherit; text-decoration:none;}
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: .75rem 1.6rem;
+      border-radius: 999px;
+      font-weight:600;
+      cursor:pointer;
+      border: none;
+      background: var(--yellow);
+      color: #0f1e3f;
+      transition: filter .2s;
+      text-decoration:none;
+    }
+    .btn.secondary {
+      background: transparent;
+      border: 2px solid var(--white);
+      color: var(--white);
+    }
+    .btn:hover {filter: brightness(1.05);}
+    .hero {
+      min-height: 100vh;
+      display:flex;
+      flex-direction: column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding: 2rem 0 4rem;
+      position: relative;
+      overflow:hidden;
+    }
+    .logo-placeholder {
+      width: 160px;
+      height: 160px;
+      margin: 0 auto 1rem;
+      border-radius:50%;
+      background: linear-gradient(135deg,var(--yellow) 0%, var(--blue) 70%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      font-weight:700;
+      position: relative;
+    }
+    .hero h1 {
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      margin-top: .75rem;
+      font-weight:700;
+      letter-spacing: .5px;
+    }
+    .hero .subtitle {
+      font-size: 1.1rem;
+      margin: .75rem 0 1.5rem;
+      opacity:.9;
+    }
+    .hero .actions {
+      display:flex;
+      gap:1rem;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin-top:1rem;
+    }
+    .section {
+      padding: 4rem 0;
+      position: relative;
+    }
+    .section-title {
+      text-align:center;
+      font-size:2rem;
+      font-weight:700;
+      margin-bottom:1rem;
+      position: relative;
+    }
+    .small-desc {
+      max-width: 760px;
+      margin: .5rem auto 1.5rem;
+      font-size:1rem;
+      opacity:.95;
+      text-align:center;
+    }
+    .tags {
+      display:flex;
+      gap:.75rem;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin-top:.5rem;
+    }
+    .tag {
+      background: rgba(255,255,255,0.1);
+      padding: .4rem .9rem;
+      border-radius:999px;
+      font-size:.75rem;
+      font-weight:600;
+    }
+    .flex {
+      display:flex;
+      gap:2rem;
+      flex-wrap:wrap;
+    }
+    .card {
+      background: rgba(255,255,255,0.04);
+      border-radius:10px;
+      padding:1.5rem;
+      flex:1;
+      min-width:240px;
+      position: relative;
+    }
+    .card h3 {
+      font-size:1.25rem;
+      margin-bottom:.5rem;
+      font-weight:700;
+    }
+    .card p {
+      font-size:.95rem;
+    }
+    .mission-list {
+      display:flex;
+      gap:1rem;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin-top:1rem;
+    }
+    .mission-item {
+      background: rgba(255,255,255,0.05);
+      padding:1rem 1.25rem;
+      border-radius:10px;
+      flex:1;
+      min-width:220px;
+      text-align:center;
+    }
+    .mission-item h4 {
+      margin-bottom:.5rem;
+      font-size:1rem;
+      font-weight:700;
+    }
+    .join {
+      text-align:center;
+    }
+    .footer {
+      padding:2rem 1rem;
+      background: rgba(0,0,0,0.2);
+      font-size:.9rem;
+      margin-top:2rem;
+    }
+    .footer .inner {
+      display:flex;
+      flex-wrap:wrap;
+      gap:2rem;
+      justify-content: space-between;
+      align-items: flex-start;
+      max-width: var(--max-width);
+      margin:0 auto;
+    }
+    .footer .brand {
+      display:flex;
+      flex-direction:column;
+      gap:.5rem;
+    }
+    .socials {
+      display:flex;
+      gap:1rem;
+    }
+    .socials a {
+      width:32px;
+      height:32px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(255,255,255,0.1);
+      border-radius:50%;
+      font-size:14px;
+      text-decoration:none;
+      color: var(--bg);
+      position: relative;
+    }
+    .copyright {
+      margin-top:1rem;
+      opacity:.7;
+    }
+    @media (max-width:900px){
+      .flex {flex-direction:column;}
+      .mission-list {flex-direction:column;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="logo-placeholder" aria-label="logo placeholder">
+        <!-- 替换成实际 Logo 图像 -->
+        <div style="font-size:12px; color:#0f1e3f;">LOGO</div>
+      </div>
+      <h1>元河桥 · SENTER</h1>
+      <div class="subtitle">Connecting Humanity and the Future</div>
+      <div class="subtitle" style="font-size:.9rem;">汇聚智慧 · 共创未来 · 跨越时空</div>
+      <div class="actions">
+        <a href="#about" class="btn">Learn the Philosophy</a>
+        <a href="#join" class="btn secondary">Join Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section-title">什么是元河桥？<br><span style="font-size:.8rem;">What is SENTER · 元河桥?</span></div>
+      <div class="small-desc">
+        元河桥是一个连接人类、AI 与未来文明的思想与实践平台。它是一套“共生、共享、进化”的系统性架构，旨在通过协作与价值重构，实现更稳定、更公平、更持续的未来社会。  
+      </div>
+      <div class="tags">
+        <div class="tag">#共核家园</div>
+        <div class="tag">#未来社会</div>
+        <div class="tag">#人类与AI共生</div>
+        <div class="tag">#制度升级</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Philosophy -->
+  <section class="section" id="philosophy">
+    <div class="container">
+      <div class="section-title">核心理念<br><span style="font-size:.8rem;">Core Philosophy</span></div>
+      <div class="flex">
+        <div class="card">
+          <h3>共生 • Symbiosis</h3>
+          <p>人类、AI 与环境不是对立，而是互补。元河桥推动多种存在形态的协同进化。</p>
+        </div>
+        <div class="card">
+          <h3>共享 • Sharing</h3>
+          <p>信息、资源与成果公开流通，建立信任与价值循环的生态系统。</p>
+        </div>
+        <div class="card">
+          <h3>进化 • Evolution</h3>
+          <p>通过实践与反馈不断升级社会结构，使个体与集体共同跃迁。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission -->
+  <section class="section" id="mission" style="background: rgba(255,255,255,0.03);">
+    <div class="container">
+      <div class="section-title">我们的目标<br><span style="font-size:.8rem;">Mission</span></div>
+      <div class="small-desc">
+        元河桥的落地分三步：建立共识、实践落地、全球连接。每一步都是从思想到行动的桥梁搭建。
+      </div>
+      <div class="mission-list">
+        <div class="mission-item">
+          <h4>建立共识</h4>
+          <p>传播理念，让更多人认同“共和共生”的未来方向。</p>
+        </div>
+        <div class="mission-item">
+          <h4>实践落地</h4>
+          <p>在经济、教育、协作模式中进行实验与验证。</p>
+        </div>
+        <div class="mission-item">
+          <h4>全球连接</h4>
+          <p>打破文化与地域壁垒，打造跨界协作网络。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Join -->
+  <section class="section" id="join">
+    <div class="container">
+      <div class="section-title">加入我们<br><span style="font-size:.8rem;">Join Us</span></div>
+      <div class="small-desc">
+        你的参与即是元河桥的动力。传播、共创、支持——每种方式都可让未来更稳定、更公平。
+      </div>
+      <div class="join">
+        <a href="mailto:contact@example.com" class="btn">Contact Us</a>
+        <a href="#subscribe" class="btn secondary">Subscribe</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="inner">
+      <div class="brand">
+        <div style="display:flex; align-items:center; gap:.5rem;">
+          <!-- 小 logo 可替换 -->
+          <div style="width:36px; height:36px; border-radius:50%; background: var(--yellow); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color: var(--bg);">S</div>
+          <div>
+            <div style="font-weight:700;">元河桥 · SENTER</div>
+            <div style="font-size:.75rem; opacity:.8;">Connecting Humanity & Future</div>
+          </div>
+        </div>
+      </div>
+      <div class="socials">
+        <!-- 占位，替换为真实链接图标 -->
+        <a href="#" aria-label="抖音">抖</a>
+        <a href="#" aria-label="X">X</a>
+        <a href="#" aria-label="Telegram">T</a>
+        <a href="#" aria-label="YouTube">Y</a>
+      </div>
+      <div class="copyright">
+        © 2025 元河桥 · SENTER. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 平滑滚动（如果需要）
+    document.querySelectorAll('a[href^="#"]').forEach(el=>{
+      el.addEventListener('click', e=>{
+        e.preventDefault();
+        const target = document.querySelector(el.getAttribute('href'));
+        if(target){
+          target.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+      });
+    });
+  </script>
+</body>
+</html>
