@@ -7,16 +7,16 @@
   <meta name="description" content="元河桥 · SETHER — 连接人类与未来的桥梁，共生、共享、进化的思想与实践平台。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- 你可以替换为本地字体或调整 -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Source+Han+Sans+CN:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Source+Han+Sans+CN:wght@500;700&display=swap" rel="stylesheet>
   <style>
     :root {
-      --bg:#0f1e3f;
-      --blue:#1f6fbf;
-      --yellow:#ffd54f;
-      --white:#f5f5f5;
-      --radius:12px;
-      --max-width:1024px;
+      --bg: #0a1628;
+      --blue: #1a7fd1;
+      --yellow: #ffcc33;
+      --white: #f0f4f8;
+      --accent: #7f5af0;
+      --radius: 16px;
+      --max-width: 1024px;
       font-family: "Source Han Sans CN", "Noto Sans SC", "Montserrat", system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
     }
     *{box-sizing:border-box;margin:0;padding:0;}
@@ -32,6 +32,88 @@
       margin: 0 auto;
       padding: 0 1rem;
     }
+    
+    /* 加载动画 */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s, visibility 0.5s;
+    }
+    .loader-circle {
+      width: 12px;
+      height: 12px;
+      margin: 0 6px;
+      background: var(--yellow);
+      border-radius: 50%;
+      animation: bounce 1s infinite ease-in-out;
+    }
+    .loader-circle:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    .loader-circle:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    /* 导航栏 */
+    .main-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 1rem 0;
+      background: rgba(15,30,63,0.8);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      transition: all 0.3s;
+    }
+    .main-nav.scrolled {
+      background: rgba(10,22,40,0.95);
+      padding: 0.5rem 0;
+    }
+    .main-nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .nav-links a {
+      font-weight: 500;
+      position: relative;
+    }
+    .nav-links a:after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--yellow);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover:after {
+      width: 100%;
+    }
+    
+    /* 按钮样式 */
     .btn {
       display: inline-block;
       padding: .75rem 1.6rem;
@@ -40,16 +122,39 @@
       cursor:pointer;
       border: none;
       background: var(--yellow);
-      color: #0f1e3f;
-      transition: filter .2s;
+      color: #0a1628;
+      transition: all 0.3s;
       text-decoration:none;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .btn:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--yellow), var(--accent));
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.3s;
+    }
+    .btn:hover:after {
+      opacity: 1;
     }
     .btn.secondary {
       background: transparent;
       border: 2px solid var(--white);
       color: var(--white);
     }
-    .btn:hover {filter: brightness(1.05);}
+    .btn.secondary:hover {
+      background: var(--white);
+      color: var(--bg);
+    }
+    
+    /* Hero 部分 */
     .hero {
       min-height: 100vh;
       display:flex;
@@ -57,9 +162,10 @@
       justify-content:center;
       align-items:center;
       text-align:center;
-      padding: 2rem 0 4rem;
+      padding: 6rem 0 4rem;
       position: relative;
       overflow:hidden;
+      background: radial-gradient(ellipse at bottom, var(--bg) 0%, #000 100%);
     }
     .logo-placeholder {
       width: 160px;
@@ -92,6 +198,8 @@
       justify-content:center;
       margin-top:1rem;
     }
+    
+    /* 通用部分样式 */
     .section {
       padding: 4rem 0;
       position: relative;
@@ -129,13 +237,23 @@
       gap:2rem;
       flex-wrap:wrap;
     }
+    
+    /* 卡片样式 */
     .card {
-      background: rgba(255,255,255,0.04);
-      border-radius:10px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      border-radius:var(--radius);
       padding:1.5rem;
       flex:1;
       min-width:240px;
       position: relative;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
     }
     .card h3 {
       font-size:1.25rem;
@@ -145,6 +263,8 @@
     .card p {
       font-size:.95rem;
     }
+    
+    /* 任务列表 */
     .mission-list {
       display:flex;
       gap:1rem;
@@ -155,19 +275,68 @@
     .mission-item {
       background: rgba(255,255,255,0.05);
       padding:1rem 1.25rem;
-      border-radius:10px;
+      border-radius:var(--radius);
       flex:1;
       min-width:220px;
       text-align:center;
+      transition: transform 0.3s;
+    }
+    .mission-item:hover {
+      transform: translateY(-3px);
     }
     .mission-item h4 {
       margin-bottom:.5rem;
       font-size:1rem;
       font-weight:700;
     }
+    
+    /* 时间线 */
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 2rem auto;
+    }
+    .timeline:before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--blue);
+      transform: translateX(-50%);
+    }
+    .timeline-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    .timeline-date {
+      width: 45%;
+      text-align: right;
+      padding-right: 2rem;
+      font-weight: 600;
+      color: var(--yellow);
+    }
+    .timeline-content {
+      width: 45%;
+      padding-left: 2rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .timeline-content h4 {
+      margin-bottom: 0.5rem;
+      color: var(--yellow);
+    }
+    
+    /* 加入我们 */
     .join {
       text-align:center;
     }
+    
+    /* 页脚 */
     .footer {
       padding:2rem 1rem;
       background: rgba(0,0,0,0.2);
@@ -202,27 +371,85 @@
       border-radius:50%;
       font-size:14px;
       text-decoration:none;
+      color: var(--white);
+      transition: all 0.3s;
+    }
+    .socials a:hover {
+      background: var(--yellow);
       color: var(--bg);
-      position: relative;
+      transform: translateY(-3px);
     }
     .copyright {
       margin-top:1rem;
       opacity:.7;
     }
+    
+    /* 响应式设计 */
     @media (max-width:900px){
       .flex {flex-direction:column;}
       .mission-list {flex-direction:column;}
+      
+      .timeline:before {
+        left: 30px;
+      }
+      .timeline-item {
+        flex-direction: column;
+      }
+      .timeline-date, .timeline-content {
+        width: 100%;
+        text-align: left;
+        padding: 0;
+      }
+      .timeline-date {
+        margin-bottom: 0.5rem;
+      }
+    }
+    
+    @media (max-width:768px){
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .section {
+        padding: 3rem 0;
+      }
+      .main-nav .container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .nav-links {
+        margin-top: 1rem;
+      }
     }
   </style>
 </head>
 <body>
+
+  <!-- 加载动画 -->
+  <div class="loader">
+    <div class="loader-circle"></div>
+    <div class="loader-circle"></div>
+    <div class="loader-circle"></div>
+  </div>
+
+  <!-- 导航栏 -->
+  <nav class="main-nav">
+    <div class="container">
+      <a href="#home" class="logo">SETHER</a>
+      <div class="nav-links">
+        <a href="#about">关于</a>
+        <a href="#philosophy">理念</a>
+        <a href="#mission">目标</a>
+        <a href="#join">加入</a>
+      </div>
+    </div>
+  </nav>
 
   <!-- Hero -->
   <section class="hero" id="home">
     <div class="container">
       <div class="logo-placeholder" aria-label="logo placeholder">
         <!-- 替换成实际 Logo 图像 -->
-        <div style="font-size:12px; color:#0f1e3f;">LOGO</div>
+        <div style="font-size:12px; color:#0a1628;">LOGO</div>
       </div>
       <h1>元河桥 · SETHER</h1>
       <div class="subtitle">Connecting Humanity and the Future</div>
@@ -239,7 +466,7 @@
     <div class="container">
       <div class="section-title">什么是元河桥？<br><span style="font-size:.8rem;">What is SETHER · 元河桥?</span></div>
       <div class="small-desc">
-        元河桥是一个连接人类、AI 与未来文明的思想与实践平台。它是一套“共生、共享、进化”的系统性架构，旨在通过协作与价值重构，实现更稳定、更公平、更持续的未来社会。  
+        元河桥是一个连接人类、AI 与未来文明的思想与实践平台。它是一套"共生、共享、进化"的系统性架构，旨在通过协作与价值重构，实现更稳定、更公平、更持续的未来社会。  
       </div>
       <div class="tags">
         <div class="tag">#共核家园</div>
@@ -281,7 +508,7 @@
       <div class="mission-list">
         <div class="mission-item">
           <h4>建立共识</h4>
-          <p>传播理念，让更多人认同“共和共生”的未来方向。</p>
+          <p>传播理念，让更多人认同"共和共生"的未来方向。</p>
         </div>
         <div class="mission-item">
           <h4>实践落地</h4>
@@ -290,6 +517,43 @@
         <div class="mission-item">
           <h4>全球连接</h4>
           <p>打破文化与地域壁垒，打造跨界协作网络。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section" id="timeline">
+    <div class="container">
+      <div class="section-title">发展历程<br><span style="font-size:.8rem;">Our Journey</span></div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">2023 Q3</div>
+          <div class="timeline-content">
+            <h4>概念诞生</h4>
+            <p>元河桥核心思想形成，初步构建理论框架</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2024 Q1</div>
+          <div class="timeline-content">
+            <h4>首次实践</h4>
+            <p>在小范围内测试共生经济模型，获得初步验证</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2024 Q4</div>
+          <div class="timeline-content">
+            <h4>平台发布</h4>
+            <p>元河桥1.0版本正式发布，开始全球协作</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2025 Q2</div>
+          <div class="timeline-content">
+            <h4>生态扩展</h4>
+            <p>连接超过100个组织和个人，形成初步生态系统</p>
+          </div>
         </div>
       </div>
     </div>
@@ -323,7 +587,6 @@
         </div>
       </div>
       <div class="socials">
-        <!-- 占位，替换为真实链接图标 -->
         <a href="#" aria-label="抖音">抖</a>
         <a href="#" aria-label="X">X</a>
         <a href="#" aria-label="Telegram">T</a>
@@ -336,7 +599,7 @@
   </footer>
 
   <script>
-    // 平滑滚动（如果需要）
+    // 平滑滚动
     document.querySelectorAll('a[href^="#"]').forEach(el=>{
       el.addEventListener('click', e=>{
         e.preventDefault();
@@ -345,6 +608,27 @@
           target.scrollIntoView({behavior:'smooth', block:'start'});
         }
       });
+    });
+    
+    // 加载动画
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.querySelector('.loader').classList.add('hidden');
+      }, 1000);
+    });
+    
+    // 导航栏滚动效果
+    window.addEventListener('scroll', function() {
+      const nav = document.querySelector('.main-nav');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+      
+      // 视差效果
+      const scrollY = window.scrollY;
+      document.querySelector('.hero').style.backgroundPositionY = scrollY * 0.5 + 'px';
     });
   </script>
 </body>
